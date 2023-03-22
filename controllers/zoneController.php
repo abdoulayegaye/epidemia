@@ -15,47 +15,52 @@ switch($action){
         break;
     case 'add' :
         $mode="Ajouter";
-        $lesContinents=Continent::findAll();
-        include('vues/nationalite/formNationalite.php');
+        $lesPays=Pays::findAll();
+        include('views/zone/add.php');
         break;
     case 'update' :
         $mode="Modifier";
-        $lesContinents = Continent::findAll();
-        $laNationalite=Nationalite::findById($_GET['num']);
-        include('vues/nationalite/formNationalite.php');
+        $lesPays = Pays::findAll();
+        $laZone=Zone::findById($_GET['idZ']);
+        include('views/zone/add.php');
         break;
     case 'delete' :
-        $laNationalite=Nationalite::findById($_GET['num']);
-        $nb=Nationalite::delete($laNationalite);
+        $nb=Zone::delete($_GET['idZ']);
         if($nb==1){
-            $_SESSION['message']=["success"=>"Le nationalite a bien été supprimé"];
+            $_SESSION['message']=["success"=>"La zone a bien été supprimé"];
         }else{
-            $_SESSION['message']=["danger"=>"Le nationalite n'a pas été supprimé"];
+            $_SESSION['message']=["danger"=>"La zone n'a pas été supprimé"];
         }
-        header('location: index.php?uc=nationalites&action=list');
+        header('location: index.php?uc=zone&action=list');
         exit();
         break;
 
     case 'validerForm' :
-        $nationalite= new Nationalite();
-        $continent=Continent::findById($_POST['continent']);
-        $nationalite->setLibelle($_POST['libelle'])
-            ->setContinent($continent);
-
-        if(empty($_POST['num'])){ // cas d'une création
-            $nb=Nationalite::add($nationalite);
+        $zone= new Zone();
+        if(empty($_POST['idZ'])){ // cas d'une création
+            $zone->setNomZ($_POST['nomZ']);
+            $zone->setNbPersonnesTotal($_POST['nbPersonnesTotal']);
+            $zone->setNbPersonnesSympt($_POST['nbPersonnesSympt']);
+            $zone->setNbPersonnesPosi($_POST['nbPersonnesPosi']);
+            $zone->setIdPays($_POST['idPays']);
+            $nb=Zone::add($zone);
             $message = "ajouté";
         }else{ //  cas d'une modif
-            $nationalite->setNum($_POST['num']);
-            $nb=Nationalite::update($nationalite);
+            $zone->setIdZ($_POST['idZ']);
+            $zone->setNomZ($_POST['nomZ']);
+            $zone->setNbPersonnesTotal($_POST['nbPersonnesTotal']);
+            $zone->setNbPersonnesSympt($_POST['nbPersonnesSympt']);
+            $zone->setNbPersonnesPosi($_POST['nbPersonnesPosi']);
+            $zone->setIdPays($_POST['idPays']);
+            $nb=Zone::update($zone);
             $message = "modifié";
         }
         if($nb==1){
-            $_SESSION['message']=["success"=>"Le nationalite a bien été $message"];
+            $_SESSION['message']=["success"=>"La zone a bien été $message"];
         }else{
-            $_SESSION['message']=["danger"=>"Le nationalite a bien été $message"];
+            $_SESSION['message']=["danger"=>"La zone a bien été $message"];
         }
-        header('location: index.php?uc=nationalites&action=list');
+        header('location: index.php?uc=zone&action=list');
         exit();
         break;
 }

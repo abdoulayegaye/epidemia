@@ -106,7 +106,7 @@ class Zone{
 
     public static function findAll($nom="", $pays="Tous")
     {
-        $texteReq="SELECT z.idZ as numero, z.nomZ as 'libZone', p.nomP as 'libPays' FROM zone z, pays p WHERE z.idPays=p.idP";
+        $texteReq="SELECT *,z.idZ as numero, z.nomZ as 'libZone', p.nomP as 'libPays' FROM zone z, pays p WHERE z.idPays=p.idP";
         if ($nom != "") {
             $texteReq .= " AND z.nomZ LIKE '%" . $nom . "%'";
         }
@@ -114,10 +114,47 @@ class Zone{
             $texteReq .= " AND p.idP =" . $pays;
         }
         $texteReq.=" ORDER BY z.nomZ";
-        $db = MonPdo::getInstance();
+        $db = DBConnexion::getInstance();
         $sql = $texteReq;
         $lesResultats = $db->query($sql)->fetchAll(2);
         return $lesResultats;
     }
+
+    public static function add(Zone $zone)
+    {
+        $db=DBConnexion::getInstance();
+        $sql = "INSERT 
+                INTO zone (idZ,nomZ,nbPersonnesTotal,nbPersonnesSympt,nbPersonnesPosi,idPays) 
+                VALUES(null,'".$zone->getNomZ()."','".$zone->getNbPersonnesTotal()."','".$zone->getNbPersonnesSympt()."','".$zone->getNbPersonnesPosi()."','".$zone->getIdPays()."')";
+        $nb=$db->exec($sql);
+        return $nb;
+    }
+
+    public static function findById($id)
+    {
+        $db = DBConnexion::getInstance();
+        $sql = "SELECT * 
+                FROM zone 
+                WHERE idZ = $id";
+        $leResultat = $db->query($sql)->fetch(2);
+        return $leResultat;
+    }
+
+    public static function update(zone $zone)
+    {
+        $db = DBConnexion::getInstance();
+        $sql = "UPDATE zone SET nomZ = '".$zone->getNomZ()."', nbPersonnesTotal = '".$zone->getNbPersonnesTotal()."', nbPersonnesSympt = '".$zone->getNbPersonnesSympt()."', nbPersonnesPosi = '".$zone->getNbPersonnesPosi()."', idPays = '".$zone->getIdPays()."' WHERE idZ = ".$zone->getIdZ();
+        $nb = $db->exec($sql);
+        return $nb;
+    }
+
+    public static function delete($id)
+    {
+        $db = DBConnexion::getInstance();
+        $sql = "DELETE FROM zone WHERE idZ = $id";
+        $nb = $db->exec($sql);
+        return $nb;
+    }
+
 
 }

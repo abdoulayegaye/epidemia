@@ -1,6 +1,6 @@
 <div class="container mt-5">
     <h2 class='pt-3 text-center'><?php echo $mode ?> une zone</h2>
-    <form action="index.php?uc=zone&action=valideForm" method="post"
+    <form action="index.php?uc=zone&action=validerForm" method="post"
           class="col-md-6 offset-md-3 border border-primary p-3 rounded">
         <div class="form-group">
             <label for='nomZ'> Nom </label>
@@ -23,14 +23,14 @@
                    value='<?php if($mode == "Modifier") {echo $laZone['nbPersonnesPosi'] ;} ?>'>
         </div>
         <div class="form-group">
-            <label for='continent'> Continent </label>
-            <select name="continent" class="form-control">
+            <label for='idPays'> Pays </label>
+            <select name="idPays" class="form-control">
                 <?php
                 foreach ($lesPays as $pays) {
                     if($mode=="Modifier"){
-                        $selection = $pays->getIdP() == $laZone->getPays()->getIdP() ? 'selected' : '';
+                        $selection = $pays['idP'] == $laZone['idPays'] ? 'selected' : '';
                     }
-                    echo "<option value='".$pays->getIdP() ."'". $selection.">".$pays->getNomP()."</option>";
+                    echo "<option value='".$pays['idP'] ."'". $selection.">".$pays['nomP']."</option>";
                 }
                 ?>
             </select>
