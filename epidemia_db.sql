@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost
--- Généré le : lun. 20 mars 2023 à 13:48
+-- Généré le : mer. 22 mars 2023 à 23:42
 -- Version du serveur : 10.4.27-MariaDB
 -- Version de PHP : 8.2.0
 
@@ -137,7 +137,9 @@ INSERT INTO `zone` (`idZ`, `nomZ`, `nbPersonnesTotal`, `nbPersonnesSympt`, `nbPe
 (3, 'Zone_SN_3', 6789, 0, 0, 1, 1),
 (4, 'Zone_MR_1', 4357, 0, 0, 2, 1),
 (5, 'Zone_MR_2', 2341, 0, 0, 2, 1),
-(6, 'Zone_MR_3', 4536, 0, 0, 2, 1);
+(6, 'Zone_MR_3', 4536, 0, 0, 2, 1),
+(7, 'toto', 1, 1, 1, 1, 1),
+(8, 'tata', 1, 2, 1, 2, 1);
 
 --
 -- Index pour les tables déchargées
@@ -213,7 +215,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT pour la table `zone`
 --
 ALTER TABLE `zone`
-  MODIFY `idZ` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `idZ` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Contraintes pour les tables déchargées

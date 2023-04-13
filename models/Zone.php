@@ -106,7 +106,7 @@ class Zone{
 
     public static function findAll($nom="", $pays="Tous")
     {
-        $texteReq="SELECT *,z.idZ as numero, z.nomZ as 'libZone', p.nomP as 'libPays' FROM zone z, pays p WHERE z.idPays=p.idP";
+        $texteReq="SELECT *, z.idZ as numero, z.nomZ as 'libZone', p.nomP as 'libPays' FROM zone z, pays p WHERE z.idPays=p.idP";
         if ($nom != "") {
             $texteReq .= " AND z.nomZ LIKE '%" . $nom . "%'";
         }
@@ -140,10 +140,12 @@ class Zone{
         return $leResultat;
     }
 
-    public static function update(zone $zone)
+    public static function update(Zone $zone)
     {
         $db = DBConnexion::getInstance();
-        $sql = "UPDATE zone SET nomZ = '".$zone->getNomZ()."', nbPersonnesTotal = '".$zone->getNbPersonnesTotal()."', nbPersonnesSympt = '".$zone->getNbPersonnesSympt()."', nbPersonnesPosi = '".$zone->getNbPersonnesPosi()."', idPays = '".$zone->getIdPays()."' WHERE idZ = ".$zone->getIdZ();
+        $sql = "UPDATE zone 
+                SET nomZ = '".$zone->getNomZ()."', nbPersonnesTotal = '".$zone->getNbPersonnesTotal()."', nbPersonnesSympt = '".$zone->getNbPersonnesSympt()."', nbPersonnesPosi = '".$zone->getNbPersonnesPosi()."', idPays = '".$zone->getIdPays()."' 
+                WHERE idZ = ".$zone->getIdZ();
         $nb = $db->exec($sql);
         return $nb;
     }
